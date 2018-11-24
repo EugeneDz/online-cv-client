@@ -1,4 +1,6 @@
 import React from 'react';
+import { Button } from 'antd';
+import 'antd/dist/antd.less';
 import logo from './logo.svg';
 import './App.css';
 
@@ -12,6 +14,7 @@ const App = () => (
       <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
         Learn React
       </a>
+      <Button type="primary">Primary</Button>
     </header>
   </div>
 );
