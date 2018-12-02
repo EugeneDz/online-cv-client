@@ -4,13 +4,13 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Layout } from 'antd';
 import 'antd/dist/antd.less';
 
-import Navbar from './views/layouts/Navbar';
+import Navbar from 'views/layouts/Navbar';
 
-import { waitingComponent } from './utils';
+import { waitingComponent } from 'utils';
 
-import store from './store';
+import store from 'store';
 
-const Dashboard = lazy(() => import('./containers/Dashboard'));
+const Dashboard = lazy(() => import('containers/Dashboard'));
 
 const App = () => (
   <Provider store={store}>

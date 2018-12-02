@@ -18,5 +18,22 @@ module.exports = {
         javascriptEnabled: true
       }
     }
-  ]
+  ],
+  babel: {
+    plugins: [
+      [
+        './node_modules/babel-plugin-module-resolver/lib/index.js',
+        {
+          root: ['./src'],
+          alias: {
+            components: './src/components',
+            containers: './src/containers',
+            store: './src/store',
+            views: './src/views',
+            utils: './src/utils'
+          }
+        }
+      ]
+    ]
+  }
 };
