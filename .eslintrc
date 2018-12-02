@@ -9,9 +9,8 @@
         "extensions": [".js", ".jsx"]
       }
     ],
-    "react/prop-types": 0,
+    "react/prop-types": 1,
     "no-underscore-dangle": 0,
-    "class-methods-use-this": 0,
     "import/imports-first": ["error", "absolute-first"],
     "import/newline-after-import": "error"
   },
