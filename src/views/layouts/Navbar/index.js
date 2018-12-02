@@ -10,10 +10,13 @@ const Navbar = () => (
       theme="light"
       mode="horizontal"
       defaultSelectedKeys={['1']}
-      style={{ lineHeight: '64px', textAlign: 'left' }}
+      style={{ lineHeight: '64px', textAlign: 'right' }}
     >
       <Menu.Item key="1">
-        <Link to="/">Dashboard</Link>
+        <Link to="/sign-up">Sign Up</Link>
+      </Menu.Item>
+      <Menu.Item key="2">
+        <Link to="/sign-in">Sign In</Link>
       </Menu.Item>
     </Menu>
   </Header>

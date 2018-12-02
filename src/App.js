@@ -5,20 +5,25 @@ import { Layout } from 'antd';
 import 'antd/dist/antd.less';
 
 import Navbar from 'views/layouts/Navbar';
+import Sidebar from 'views/layouts/Sidebar';
 
 import { waitingComponent } from 'utils';
 
 import store from 'store';
 
 const Dashboard = lazy(() => import('containers/Dashboard'));
+const { Content } = Layout;
 
 const App = () => (
   <Provider store={store}>
     <Router>
       <Layout style={{ minHeight: '100%' }}>
-        <Navbar />
+        <Sidebar />
         <Layout>
-          <Route exact path="/" component={waitingComponent(Dashboard)} />
+          <Navbar />
+          <Content>
+            <Route exact path="/" component={waitingComponent(Dashboard)} />
+          </Content>
         </Layout>
       </Layout>
     </Router>
