@@ -13,6 +13,9 @@ import { waitingComponent } from 'utils';
 import store from 'store';
 
 const Dashboard = lazy(() => import('containers/Dashboard'));
+const SignIn = lazy(() => import('containers/SignIn'));
+const SignUp = lazy(() => import('containers/SignUp'));
+
 const { Content } = Layout;
 
 const App = () => (
@@ -24,6 +27,8 @@ const App = () => (
           <Navbar />
           <Content>
             <Route exact path="/" component={waitingComponent(Dashboard)} />
+            <Route exact path="/sign-in" component={waitingComponent(SignIn)} />
+            <Route exact path="/sign-up" component={waitingComponent(SignUp)} />
             <Footer />
           </Content>
         </Layout>
