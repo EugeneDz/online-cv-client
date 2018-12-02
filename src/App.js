@@ -6,6 +6,7 @@ import 'antd/dist/antd.less';
 
 import Navbar from 'views/layouts/Navbar';
 import Sidebar from 'views/layouts/Sidebar';
+import Footer from 'views/layouts/Footer';
 
 import { waitingComponent } from 'utils';
 
@@ -23,6 +24,7 @@ const App = () => (
           <Navbar />
           <Content>
             <Route exact path="/" component={waitingComponent(Dashboard)} />
+            <Footer />
           </Content>
         </Layout>
       </Layout>
