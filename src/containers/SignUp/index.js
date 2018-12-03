@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { Button, Divider, Input, Icon, Row, Col } from 'antd';
 
+import { API_URL, USERS_REGISTER } from 'config';
+
+import { ErrorDescr } from './styled-components';
+
 const { Group } = Input;
 
 class SignUp extends Component {
@@ -18,14 +22,25 @@ class SignUp extends Component {
     };
   }
 
-  handleOnChange = ({ target: { name, value } }) =>
-    this.setState({
-      [name]: value
-    });
+  toggleLoading = () => {
+    const { loading } = this.state;
 
-  handleOnSubmit = e => {
+    this.setState({ loading: !loading });
+  };
+
+  handleOnChange = ({ target: { name, value } }) => {
+    const { errors } = this.state;
+
+    this.setState({
+      [name]: value,
+      errors: { ...errors, [name]: '' }
+    });
+  };
+
+  handleOnSubmit = async e => {
     const { name, email, password, password2 } = this.state;
     e.preventDefault();
+    this.toggleLoading();
 
     const user = {
       name,
@@ -34,7 +49,25 @@ class SignUp extends Component {
       password2
     };
 
-    console.log(user);
+    try {
+      const res = await fetch(`${API_URL}${USERS_REGISTER}`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+      });
+      const json = await res.json();
+      const status = await res.status;
+
+      if (status === 400) this.setState({ errors: json });
+      else console.log(json);
+
+      this.toggleLoading();
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   render() {
@@ -65,44 +98,53 @@ class SignUp extends Component {
                     placeholder="Name"
                     onChange={this.handleOnChange}
                   />
-                  {errors.name && <span> {errors.name} </span>}
+                  {errors.name && <ErrorDescr>{errors.name}</ErrorDescr>}
                 </Group>
               </Col>
               <Col span={12}>
-                <Input
-                  prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  name="email"
-                  value={email}
-                  placeholder="Email"
-                  onChange={this.handleOnChange}
-                />
+                <Group>
+                  <Input
+                    prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    name="email"
+                    value={email}
+                    placeholder="Email"
+                    onChange={this.handleOnChange}
+                  />
+                  {errors.email && <ErrorDescr> {errors.email} </ErrorDescr>}
+                </Group>
               </Col>
             </Row>
             <Divider />
             <Row gutter={16}>
               <Col span={12}>
-                <Input
-                  prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  name="password"
-                  type="password"
-                  value={password}
-                  placeholder="Password"
-                  onChange={this.handleOnChange}
-                />
+                <Group>
+                  <Input
+                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    name="password"
+                    type="password"
+                    value={password}
+                    placeholder="Password"
+                    onChange={this.handleOnChange}
+                  />
+                  {errors.password && <ErrorDescr> {errors.password} </ErrorDescr>}
+                </Group>
               </Col>
               <Col span={12}>
-                <Input
-                  prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  name="password2"
-                  type="password"
-                  value={password2}
-                  placeholder="Confirm password"
-                  onChange={this.handleOnChange}
-                />
+                <Group>
+                  <Input
+                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    name="password2"
+                    type="password"
+                    value={password2}
+                    placeholder="Confirm password"
+                    onChange={this.handleOnChange}
+                  />
+                  {errors.password2 && <ErrorDescr> {errors.password2} </ErrorDescr>}
+                </Group>
               </Col>
             </Row>
             <Divider orientation="right">
-              <Button type="primary" loading={loading} block>
+              <Button type="primary" loading={loading} block onClick={this.handleOnSubmit}>
                 Submit
               </Button>
             </Divider>

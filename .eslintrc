@@ -22,7 +22,8 @@
     "FileReader": true,
     "Blob": true,
     "navigator": true,
-    "import": true
+    "import": true,
+    "fetch": true
   },
   "settings": {
     "import/resolver": {
@@ -30,6 +31,7 @@
         "alias": {
           "components": "./src/components",
           "containers": "./src/containers",
+          "config": "./src/config",
           "store": "./src/store",
           "views": "./src/views",
           "utils": "./src/utils"
