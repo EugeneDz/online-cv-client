@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
+import { connect } from 'react-redux';
 import { Button, Divider, Input, Icon, Row, Col } from 'antd';
+
+import { setCurrentUser } from 'store/actions/auth';
 
 import { API_URL, USERS_REGISTER } from 'config';
 
@@ -38,10 +41,9 @@ class SignUp extends Component {
   };
 
   handleOnSubmit = async e => {
-    const { name, email, password, password2 } = this.state;
     e.preventDefault();
-    this.toggleLoading();
 
+    const { name, email, password, password2 } = this.state;
     const user = {
       name,
       email,
@@ -49,22 +51,32 @@ class SignUp extends Component {
       password2
     };
 
+    await this.toggleLoading();
+    await this.registerUser(user);
+    await this.toggleLoading();
+  };
+
+  registerUser = async user => {
+    const { setCurrentUser: _setCurrentUser } = this.props;
+
     try {
-      const res = await fetch(`${API_URL}${USERS_REGISTER}`, {
+      const options = {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(user)
-      });
-      const json = await res.json();
+      };
+      const res = await fetch(`${API_URL}${USERS_REGISTER}`, options);
+      const data = await res.json();
       const status = await res.status;
 
-      if (status === 400) this.setState({ errors: json });
-      else console.log(json);
+      // Add promise delay to prevent UI blinking when the response does to fast.
+      await new Promise(resolve => setTimeout(resolve, 400));
 
-      this.toggleLoading();
+      if (status === 400) this.setState({ errors: data });
+      else _setCurrentUser(data);
     } catch (err) {
       console.log(err);
     }
@@ -155,4 +167,13 @@ class SignUp extends Component {
   }
 }
 
-export default SignUp;
+const mapStateToProps = ({ auth }) => ({
+  auth
+});
+
+export default connect(
+  mapStateToProps,
+  {
+    setCurrentUser
+  }
+)(SignUp);
