@@ -52,7 +52,10 @@ class SignUp extends Component {
     const { errors } = this.props;
     const { setErrors: _setErrors } = this.props;
 
-    _setErrors({ ...errors, [name]: '' });
+    if (errors[name]) {
+      _setErrors({ ...errors, [name]: '' });
+    }
+
     this.setState({ [name]: value });
   };
 
