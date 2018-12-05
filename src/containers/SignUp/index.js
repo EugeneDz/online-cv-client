@@ -48,6 +48,12 @@ class SignUp extends Component {
       }
     });
 
+  onError = () =>
+    Modal.error({
+      title: 'Oops, it seems an error occurred!',
+      content: 'We are working on solving the issue.'
+    });
+
   handleOnChange = ({ target: { name, value } }) => {
     const { errors } = this.props;
     const { setErrors: _setErrors } = this.props;
@@ -97,6 +103,9 @@ class SignUp extends Component {
       if (status === 400) _setErrors(data);
       else this.onSuccess();
     } catch (err) {
+      this.onError();
+
+      // Log the error to an error reporting service
       console.log(err);
     }
   };
