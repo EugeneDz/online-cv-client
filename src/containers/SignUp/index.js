@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Button, Divider, Input, Icon, Row, Col } from 'antd';
 
 import { setCurrentUser } from 'store/actions/auth';
+import { setErrors, unsetErrors } from 'store/actions/errors';
 
 import { API_URL, USERS_REGISTER } from 'config';
 
@@ -20,10 +21,15 @@ class SignUp extends Component {
       name: '',
       email: '',
       password: '',
-      password2: '',
-      errors: {}
+      password2: ''
     };
   }
+
+  componentWillUnmount = () => {
+    const { unsetErrors: _unsetErrors } = this.props;
+
+    _unsetErrors();
+  };
 
   toggleLoading = () => {
     const { loading } = this.state;
@@ -32,12 +38,11 @@ class SignUp extends Component {
   };
 
   handleOnChange = ({ target: { name, value } }) => {
-    const { errors } = this.state;
+    const { errors } = this.props;
+    const { setErrors: _setErrors } = this.props;
 
-    this.setState({
-      [name]: value,
-      errors: { ...errors, [name]: '' }
-    });
+    _setErrors({ ...errors, [name]: '' });
+    this.setState({ [name]: value });
   };
 
   handleOnSubmit = async e => {
@@ -58,6 +63,7 @@ class SignUp extends Component {
 
   registerUser = async user => {
     const { setCurrentUser: _setCurrentUser } = this.props;
+    const { setErrors: _setErrors } = this.props;
 
     try {
       const options = {
@@ -75,7 +81,7 @@ class SignUp extends Component {
       // Add promise delay to prevent UI blinking when the response does to fast.
       await new Promise(resolve => setTimeout(resolve, 400));
 
-      if (status === 400) this.setState({ errors: data });
+      if (status === 400) _setErrors(data);
       else _setCurrentUser(data);
     } catch (err) {
       console.log(err);
@@ -83,7 +89,8 @@ class SignUp extends Component {
   };
 
   render() {
-    const { name, email, password, password2, errors, loading } = this.state;
+    const { name, email, password, password2, loading } = this.state;
+    const { errors } = this.props;
 
     return (
       <>
@@ -167,13 +174,16 @@ class SignUp extends Component {
   }
 }
 
-const mapStateToProps = ({ auth }) => ({
-  auth
+const mapStateToProps = ({ auth, errors }) => ({
+  auth,
+  errors
 });
 
 export default connect(
   mapStateToProps,
   {
-    setCurrentUser
+    setCurrentUser,
+    setErrors,
+    unsetErrors
   }
 )(SignUp);
