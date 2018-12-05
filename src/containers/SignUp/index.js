@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
-import { Button, Divider, Input, Icon, Row, Col } from 'antd';
+import { Modal, Button, Divider, Input, Icon, Row, Col } from 'antd';
 
-import { setCurrentUser } from 'store/actions/auth';
 import { setErrors, unsetErrors } from 'store/actions/errors';
 
 import { API_URL, USERS_REGISTER } from 'config';
@@ -37,6 +36,18 @@ class SignUp extends Component {
     this.setState({ loading: !loading });
   };
 
+  onSuccess = () =>
+    Modal.success({
+      title: 'Registration Successful!',
+      content: 'You will be redirected into a sign in page.',
+      onOk: () => {
+        const {
+          history: { push }
+        } = this.props;
+        push('/sign-in');
+      }
+    });
+
   handleOnChange = ({ target: { name, value } }) => {
     const { errors } = this.props;
     const { setErrors: _setErrors } = this.props;
@@ -62,7 +73,6 @@ class SignUp extends Component {
   };
 
   registerUser = async user => {
-    const { setCurrentUser: _setCurrentUser } = this.props;
     const { setErrors: _setErrors } = this.props;
 
     try {
@@ -82,7 +92,7 @@ class SignUp extends Component {
       await new Promise(resolve => setTimeout(resolve, 400));
 
       if (status === 400) _setErrors(data);
-      else _setCurrentUser(data);
+      else this.onSuccess();
     } catch (err) {
       console.log(err);
     }
@@ -174,15 +184,13 @@ class SignUp extends Component {
   }
 }
 
-const mapStateToProps = ({ auth, errors }) => ({
-  auth,
+const mapStateToProps = ({ errors }) => ({
   errors
 });
 
 export default connect(
   mapStateToProps,
   {
-    setCurrentUser,
     setErrors,
     unsetErrors
   }
