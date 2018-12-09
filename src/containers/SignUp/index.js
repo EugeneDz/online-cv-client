@@ -128,7 +128,7 @@ class SignUp extends Component {
               </Col>
             </Row>
           </header>
-          <form onSubmit={this.handleOnSubmit}>
+          <div>
             <Row gutter={16}>
               <Col span={12}>
                 <Group>
@@ -189,7 +189,7 @@ class SignUp extends Component {
                 Submit
               </Button>
             </Divider>
-          </form>
+          </div>
         </section>
       </>
     );

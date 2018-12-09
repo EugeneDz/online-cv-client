@@ -6,6 +6,8 @@
     "@craco/craco": "2.2.3",
     "antd": "3.10.7",
     "craco-less": "1.0.4",
+    "jwt-decode": "2.2.0",
+    "lodash": "4.17.11",
     "react": "^16.6.3",
     "react-dom": "^16.6.3",
     "react-helmet": "5.2.0",
