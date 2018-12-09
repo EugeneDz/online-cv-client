@@ -24,15 +24,6 @@ class SignIn extends Component {
     };
   }
 
-  componentDidUpdate = () => {
-    if (localStorage.token) {
-      const {
-        history: { push }
-      } = this.props;
-      push('/');
-    }
-  };
-
   toggleLoading = () => {
     const { loading } = this.state;
 
@@ -61,7 +52,6 @@ class SignIn extends Component {
 
     await this.toggleLoading();
     await this.loginUser(user);
-    await this.toggleLoading();
   };
 
   loginUser = async user => {
@@ -83,15 +73,24 @@ class SignIn extends Component {
       // Add promise delay to prevent UI blinking when the response does to fast.
       await new Promise(resolve => setTimeout(resolve, 400));
 
-      if (status === 400) _setErrors(data);
-      else {
-        localStorage.setItem('token', data.token);
+      if (status === 400) {
+        _setErrors(data);
+        await this.toggleLoading();
+      } else {
+        const {
+          history: { push }
+        } = this.props;
         const decodedUser = jwtDecode(data.token);
 
+        localStorage.setItem('token', data.token);
         _setCurrentUser(decodedUser);
+
+        await this.toggleLoading();
+        push('/');
       }
     } catch (err) {
       this.onError();
+      this.toggleLoading();
 
       // Log the error to an error reporting service
       console.log(err);
@@ -156,8 +155,9 @@ class SignIn extends Component {
   }
 }
 
-const mapStateToProps = ({ errors }) => ({
-  errors
+const mapStateToProps = ({ errors, auth }) => ({
+  errors,
+  auth
 });
 
 export default connect(
