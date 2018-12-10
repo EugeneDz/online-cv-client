@@ -9,7 +9,7 @@ import Navbar from 'views/layouts/Navbar';
 import Sidebar from 'views/layouts/Sidebar';
 import Footer from 'views/layouts/Footer';
 
-import { waitingComponent } from 'utils';
+import { waitingComponent, PrivateRoute } from 'utils';
 
 import store from 'store';
 import { setCurrentUser } from 'store/actions/auth';
@@ -34,7 +34,7 @@ const App = () => (
         <Layout>
           <Navbar />
           <Content>
-            <Route exact path="/" component={waitingComponent(Dashboard)} />
+            <PrivateRoute exact path="/" component={waitingComponent(Dashboard)} />
             <Route exact path="/sign-in" component={waitingComponent(SignIn)} />
             <Route exact path="/sign-up" component={waitingComponent(SignUp)} />
             <Footer />
