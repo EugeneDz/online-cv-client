@@ -1,4 +1,4 @@
-export const API_URL = 'http://online-cv-api.herokuapp.com';
+export const API_URL = 'https://online-cv-api.herokuapp.com';
 
 /**
  * Users
