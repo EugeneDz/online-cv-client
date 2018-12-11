@@ -12,7 +12,7 @@ import Footer from 'views/layouts/Footer';
 import { waitingComponent, PrivateRoute } from 'utils';
 
 import store from 'store';
-import { setCurrentUser } from 'store/actions/auth';
+import { setCurrentUser, unsetCurrentUser } from 'store/actions/auth';
 
 const Dashboard = lazy(() => import('containers/Dashboard'));
 const SignIn = lazy(() => import('containers/SignIn'));
@@ -22,8 +22,14 @@ const { Content } = Layout;
 
 if (localStorage.token) {
   const decodedUser = jwtDecode(localStorage.token);
-  // TODO: add validate token check
   store.dispatch(setCurrentUser(decodedUser));
+
+  const currentTime = Date.now() / 1000;
+  if (decodedUser.exp < currentTime) {
+    store.dispatch(unsetCurrentUser());
+
+    window.location.href = '/sign-in';
+  }
 }
 
 const App = () => (
