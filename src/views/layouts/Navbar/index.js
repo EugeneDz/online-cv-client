@@ -38,7 +38,7 @@ const Navbar = ({
         >
           <SubMenu key="sub1" title={userTitle()}>
             <Menu.Item key="setting:1">
-              <Link to={`/profile/${user.id}`}>
+              <Link to="/profile">
                 <Icon type="idcard" /> Profile
               </Link>
             </Menu.Item>
