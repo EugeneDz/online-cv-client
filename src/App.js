@@ -15,6 +15,7 @@ import { setCurrentUser, unsetCurrentUser } from 'store/actions/auth';
 
 const Dashboard = lazy(() => import('containers/Dashboard'));
 const Profile = lazy(() => import('containers/Profile'));
+const Posts = lazy(() => import('containers/Posts'));
 const SignIn = lazy(() => import('containers/SignIn'));
 const SignUp = lazy(() => import('containers/SignUp'));
 
@@ -42,6 +43,7 @@ const App = () => (
           <Content>
             <PrivateRoute exact path="/" component={waitingComponent(Dashboard)} />
             <PrivateRoute exact path="/profile" component={waitingComponent(Profile)} />
+            <PrivateRoute exact path="/posts" component={waitingComponent(Posts)} />
             <Route exact path="/sign-in" component={waitingComponent(SignIn)} />
             <Route exact path="/sign-up" component={waitingComponent(SignUp)} />
             <Footer />
