@@ -7,6 +7,8 @@ import { setCurrentProfile } from 'store/actions/profile';
 
 import { API_URL, CURRENT_PROFILE } from 'config';
 
+import { Section } from './styled-components';
+
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -74,7 +76,7 @@ class Profile extends Component {
           <title>Online CV | Profile</title>
           <meta name="description" content="Online CV for developers" />
         </Helmet>
-        <section style={{ minHeight: '100vh', background: '#fff', padding: 24, margin: 24 }}>
+        <Section>
           <header>
             <h1>Profile Page</h1>
           </header>
@@ -93,7 +95,7 @@ class Profile extends Component {
               </Divider>
             </div>
           )}
-        </section>
+        </Section>
       </>
     );
   }
