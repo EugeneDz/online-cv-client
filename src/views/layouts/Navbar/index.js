@@ -2,13 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { Layout, Menu, Avatar, Icon } from 'antd';
+import { Layout, Avatar, Icon } from 'antd';
 
 import { unsetCurrentUser } from 'store/actions/auth';
 
-import SubMenu from './styled-components';
+import { Menu } from './styled-components';
 
 const { Header } = Layout;
+const { SubMenu } = Menu;
 
 const Navbar = ({
   unsetCurrentUser: _unsetCurrentUser,
@@ -28,9 +29,9 @@ const Navbar = ({
   };
 
   return (
-    <Header style={{ background: '#fff', padding: 0 }}>
+    <Header>
       {isAuthenticated ? (
-        <Menu theme="light" mode="horizontal" style={{ lineHeight: '64px', textAlign: 'right' }}>
+        <Menu theme="dark" mode="horizontal">
           <SubMenu key="sub1" title={userTitle()}>
             <Menu.Item key="setting:1">
               <Link to="/profile">
@@ -53,12 +54,7 @@ const Navbar = ({
           </SubMenu>
         </Menu>
       ) : (
-        <Menu
-          theme="light"
-          mode="horizontal"
-          defaultSelectedKeys={['1']}
-          style={{ lineHeight: '64px', textAlign: 'right' }}
-        >
+        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
           <Menu.Item key="1">
             <Link to="/sign-up">Sign Up</Link>
           </Menu.Item>
