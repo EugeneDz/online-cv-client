@@ -17,7 +17,7 @@ const Navbar = ({
 }) => {
   const userTitle = () => (
     <span className="submenu-title-wrapper">
-      <Avatar src={user.avatar} /> {user.name}
+      <Avatar src={user.avatar} /> {user.name} <Icon type="caret-down" />
     </span>
   );
 
@@ -30,20 +30,24 @@ const Navbar = ({
   return (
     <Header style={{ background: '#fff', padding: 0 }}>
       {isAuthenticated ? (
-        <Menu
-          theme="light"
-          mode="horizontal"
-          defaultSelectedKeys={['1']}
-          defaultOpenKeys={['sub1']}
-          style={{ lineHeight: '64px', textAlign: 'right' }}
-        >
+        <Menu theme="light" mode="horizontal" style={{ lineHeight: '64px', textAlign: 'right' }}>
           <SubMenu key="sub1" title={userTitle()}>
             <Menu.Item key="setting:1">
               <Link to="/profile">
                 <Icon type="idcard" /> Profile
               </Link>
             </Menu.Item>
-            <Menu.Item key="setting:2" onClick={logout}>
+            <Menu.Item key="setting:2">
+              <Link to="/">
+                <Icon type="contacts" /> Dashboard
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="setting:3">
+              <Link to="/posts">
+                <Icon type="message" /> Posts
+              </Link>
+            </Menu.Item>
+            <Menu.Item key="setting:4" onClick={logout}>
               <Icon type="logout" /> Logout
             </Menu.Item>
           </SubMenu>

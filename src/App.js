@@ -6,7 +6,6 @@ import { Layout } from 'antd';
 import 'antd/dist/antd.less';
 
 import Navbar from 'views/layouts/Navbar';
-import Sidebar from 'views/layouts/Sidebar';
 import Footer from 'views/layouts/Footer';
 
 import { waitingComponent, PrivateRoute } from 'utils';
@@ -38,7 +37,6 @@ const App = () => (
   <Provider store={store}>
     <Router>
       <Layout style={{ minHeight: '100%' }}>
-        <Sidebar />
         <Layout>
           <Navbar />
           <Content>
