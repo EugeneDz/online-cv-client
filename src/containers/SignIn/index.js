@@ -9,7 +9,7 @@ import { setCurrentUser } from 'store/actions/auth';
 
 import { API_URL, USERS_LOGIN } from 'config';
 
-import { ErrorDescr } from './styled-components';
+import { Section, ErrorDescr } from './styled-components';
 
 const { Group } = Input;
 
@@ -107,17 +107,17 @@ class SignIn extends Component {
           <title>Online CV | Sign Ip</title>
           <meta name="description" content="Online CV for developers" />
         </Helmet>
-        <section style={{ minHeight: '100vh', background: '#fff', padding: 24, margin: 24 }}>
+        <Section>
           <header>
-            <Row>
+            <Row type="flex" justify="center">
               <Col span={24}>
-                <h1 style={{ textAlign: 'center' }}>Sign Ip</h1>
+                <h1 style={{ textAlign: 'center' }}>Sign In</h1>
               </Col>
             </Row>
           </header>
           <div>
-            <Row gutter={16}>
-              <Col span={12}>
+            <Row gutter={16} type="flex" justify="center">
+              <Col xs={24} md={12}>
                 <Group>
                   <Input
                     prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -129,7 +129,7 @@ class SignIn extends Component {
                   {errors.email && <ErrorDescr> {errors.email} </ErrorDescr>}
                 </Group>
               </Col>
-              <Col span={12}>
+              <Col xs={24} md={12}>
                 <Group>
                   <Input
                     prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -143,13 +143,17 @@ class SignIn extends Component {
                 </Group>
               </Col>
             </Row>
-            <Divider orientation="right">
-              <Button type="primary" loading={loading} block onClick={this.handleOnSubmit}>
-                Sign In
-              </Button>
-            </Divider>
+            <Row gutter={16} type="flex" justify="center">
+              <Col span={24}>
+                <Divider orientation="right">
+                  <Button type="primary" loading={loading} block onClick={this.handleOnSubmit}>
+                    Sign In
+                  </Button>
+                </Divider>
+              </Col>
+            </Row>
           </div>
-        </section>
+        </Section>
       </>
     );
   }
