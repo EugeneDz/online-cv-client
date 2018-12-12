@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { Layout, Menu, Avatar, Icon } from 'antd';
 
-import { unsetCurrentUser } from '../../../store/actions/auth';
+import { unsetCurrentUser } from 'store/actions/auth';
+
+import SubMenu from './styled-components';
 
 const { Header } = Layout;
-const { SubMenu } = Menu;
 
 const Navbar = ({
   unsetCurrentUser: _unsetCurrentUser,
