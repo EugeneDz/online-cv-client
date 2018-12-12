@@ -113,23 +113,28 @@ class SignIn extends Component {
               <Col span={24}>
                 <h1 style={{ textAlign: 'center' }}>Sign In</h1>
               </Col>
+              <Col span={24}>
+                <p style={{ textAlign: 'center' }}>Sign in to your account</p>
+              </Col>
             </Row>
           </header>
           <div>
             <Row gutter={16} type="flex" justify="center">
-              <Col xs={24} md={12}>
+              <Col xs={24} md={16}>
                 <Group>
                   <Input
                     prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
                     name="email"
                     value={email}
                     placeholder="Email"
+                    size="large"
                     onChange={this.handleOnChange}
+                    style={{ marginBottom: 12 }}
                   />
                   {errors.email && <ErrorDescr> {errors.email} </ErrorDescr>}
                 </Group>
               </Col>
-              <Col xs={24} md={12}>
+              <Col xs={24} md={16}>
                 <Group>
                   <Input
                     prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -137,6 +142,7 @@ class SignIn extends Component {
                     type="password"
                     value={password}
                     placeholder="Password"
+                    size="large"
                     onChange={this.handleOnChange}
                   />
                   {errors.password && <ErrorDescr> {errors.password} </ErrorDescr>}
@@ -144,10 +150,16 @@ class SignIn extends Component {
               </Col>
             </Row>
             <Row gutter={16} type="flex" justify="center">
-              <Col span={24}>
+              <Col xs={24} md={16}>
                 <Divider orientation="right">
-                  <Button type="primary" loading={loading} block onClick={this.handleOnSubmit}>
-                    Sign In
+                  <Button
+                    type="primary"
+                    size="large"
+                    loading={loading}
+                    block
+                    onClick={this.handleOnSubmit}
+                  >
+                    Submit
                   </Button>
                 </Divider>
               </Col>
