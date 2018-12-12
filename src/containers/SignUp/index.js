@@ -7,7 +7,7 @@ import { setErrors, unsetErrors } from 'store/actions/errors';
 
 import { API_URL, USERS_REGISTER } from 'config';
 
-import { ErrorDescr } from './styled-components';
+import { Section, ErrorDescr } from './styled-components';
 
 const { Group } = Input;
 
@@ -120,17 +120,17 @@ class SignUp extends Component {
           <title>Online CV | Sign Up</title>
           <meta name="description" content="Online CV for developers" />
         </Helmet>
-        <section style={{ minHeight: '100vh', background: '#fff', padding: 24, margin: 24 }}>
+        <Section>
           <header>
-            <Row>
+            <Row ype="flex" justify="center">
               <Col span={24}>
                 <h1 style={{ textAlign: 'center' }}>Sign Up</h1>
               </Col>
             </Row>
           </header>
           <div>
-            <Row gutter={16}>
-              <Col span={12}>
+            <Row gutter={16} type="flex" justify="center">
+              <Col xs={24} md={12}>
                 <Group>
                   <Input
                     prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -142,7 +142,7 @@ class SignUp extends Component {
                   {errors.name && <ErrorDescr>{errors.name}</ErrorDescr>}
                 </Group>
               </Col>
-              <Col span={12}>
+              <Col xs={24} md={12}>
                 <Group>
                   <Input
                     prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -156,8 +156,8 @@ class SignUp extends Component {
               </Col>
             </Row>
             <Divider />
-            <Row gutter={16}>
-              <Col span={12}>
+            <Row gutter={16} type="flex" justify="center">
+              <Col xs={24} md={12}>
                 <Group>
                   <Input
                     prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -170,7 +170,7 @@ class SignUp extends Component {
                   {errors.password && <ErrorDescr> {errors.password} </ErrorDescr>}
                 </Group>
               </Col>
-              <Col span={12}>
+              <Col xs={24} md={12}>
                 <Group>
                   <Input
                     prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -184,13 +184,17 @@ class SignUp extends Component {
                 </Group>
               </Col>
             </Row>
-            <Divider orientation="right">
-              <Button type="primary" loading={loading} block onClick={this.handleOnSubmit}>
-                Submit
-              </Button>
-            </Divider>
+            <Row gutter={16} type="flex" justify="center">
+              <Col span={24}>
+                <Divider orientation="right">
+                  <Button type="primary" loading={loading} block onClick={this.handleOnSubmit}>
+                    Submit
+                  </Button>
+                </Divider>
+              </Col>
+            </Row>
           </div>
-        </section>
+        </Section>
       </>
     );
   }
