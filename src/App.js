@@ -27,6 +27,7 @@ if (localStorage.token) {
 
   const currentTime = Date.now() / 1000;
   if (decodedUser.exp < currentTime) {
+    localStorage.clear();
     store.dispatch(unsetCurrentUser());
 
     window.location.href = '/sign-in';
