@@ -13,11 +13,30 @@ import { waitingComponent, PrivateRoute } from 'utils';
 import store from 'store';
 import { setCurrentUser, unsetCurrentUser } from 'store/actions/auth';
 
-const Dashboard = lazy(() => import('containers/Dashboard'));
-const Profile = lazy(() => import('containers/Profile'));
-const Posts = lazy(() => import('containers/Posts'));
-const SignIn = lazy(() => import('containers/SignIn'));
-const SignUp = lazy(() => import('containers/SignUp'));
+const Dashboard = lazy(async () => {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  return import('containers/Dashboard');
+});
+
+const Profile = lazy(async () => {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  return import('containers/Profile');
+});
+
+const Posts = lazy(async () => {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  return import('containers/Posts');
+});
+
+const SignIn = lazy(async () => {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  return import('containers/SignIn');
+});
+
+const SignUp = lazy(async () => {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  return import('containers/SignUp');
+});
 
 const { Content } = Layout;
 

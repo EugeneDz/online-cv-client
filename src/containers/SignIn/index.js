@@ -3,6 +3,7 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 import { Modal, Button, Divider, Input, Icon, Row, Col } from 'antd';
+import { Spring } from 'react-spring';
 
 import { setErrors, unsetErrors } from 'store/actions/errors';
 import { setCurrentUser } from 'store/actions/auth';
@@ -107,65 +108,76 @@ class SignIn extends Component {
           <title>Online CV | Sign Ip</title>
           <meta name="description" content="Online CV for developers" />
         </Helmet>
-        <Section>
-          <header>
-            <Row type="flex" justify="center">
-              <Col span={24}>
-                <h1 style={{ textAlign: 'center' }}>Sign In</h1>
-              </Col>
-              <Col span={24}>
-                <p style={{ textAlign: 'center' }}>Sign in to your account</p>
-              </Col>
-            </Row>
-          </header>
-          <div>
-            <Row gutter={16} type="flex" justify="center">
-              <Col xs={24} md={16}>
-                <Group>
-                  <Input
-                    prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    name="email"
-                    value={email}
-                    placeholder="Email"
-                    size="large"
-                    onChange={this.handleOnChange}
-                    style={{ marginBottom: 12 }}
-                  />
-                  {errors.email && <ErrorDescr> {errors.email} </ErrorDescr>}
-                </Group>
-              </Col>
-              <Col xs={24} md={16}>
-                <Group>
-                  <Input
-                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    name="password"
-                    type="password"
-                    value={password}
-                    placeholder="Password"
-                    size="large"
-                    onChange={this.handleOnChange}
-                  />
-                  {errors.password && <ErrorDescr> {errors.password} </ErrorDescr>}
-                </Group>
-              </Col>
-            </Row>
-            <Row gutter={16} type="flex" justify="center">
-              <Col xs={24} md={16}>
-                <Divider orientation="right">
-                  <Button
-                    type="primary"
-                    size="large"
-                    loading={loading}
-                    block
-                    onClick={this.handleOnSubmit}
-                  >
-                    Submit
-                  </Button>
-                </Divider>
-              </Col>
-            </Row>
-          </div>
-        </Section>
+        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+          {section => (
+            <Section style={section}>
+              <header>
+                <Row type="flex" justify="center">
+                  <Col span={24}>
+                    <h1 style={{ textAlign: 'center' }}>Sign In</h1>
+                  </Col>
+                  <Col span={24}>
+                    <p style={{ textAlign: 'center' }}>Sign in to your account</p>
+                  </Col>
+                </Row>
+              </header>
+              <div>
+                <Row gutter={16} type="flex" justify="center">
+                  <Col xs={24} md={16}>
+                    <Group>
+                      <Input
+                        prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        name="email"
+                        value={email}
+                        placeholder="Email"
+                        size="large"
+                        onChange={this.handleOnChange}
+                      />
+                      {errors.email && (
+                        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+                          {props => <ErrorDescr style={props}> {errors.email} </ErrorDescr>}
+                        </Spring>
+                      )}
+                    </Group>
+                  </Col>
+                  <Col xs={24} md={16} style={{ marginTop: 24 }}>
+                    <Group>
+                      <Input
+                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        name="password"
+                        type="password"
+                        value={password}
+                        placeholder="Password"
+                        size="large"
+                        onChange={this.handleOnChange}
+                      />
+                      {errors.password && (
+                        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+                          {props => <ErrorDescr style={props}> {errors.password} </ErrorDescr>}
+                        </Spring>
+                      )}
+                    </Group>
+                  </Col>
+                </Row>
+                <Row gutter={16} type="flex" justify="center">
+                  <Col xs={24} md={16}>
+                    <Divider orientation="right">
+                      <Button
+                        type="primary"
+                        size="large"
+                        loading={loading}
+                        block
+                        onClick={this.handleOnSubmit}
+                      >
+                        Submit
+                      </Button>
+                    </Divider>
+                  </Col>
+                </Row>
+              </div>
+            </Section>
+          )}
+        </Spring>
       </>
     );
   }

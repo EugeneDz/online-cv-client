@@ -6,7 +6,19 @@ import store from '../store';
 
 // Component Lazy Loading to be used in react-router
 export const waitingComponent = Component => props => (
-  <Suspense fallback={<Spin />}>
+  <Suspense
+    fallback={
+      <Spin
+        style={{
+          display: 'flex',
+          width: '100%',
+          height: '100vh',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      />
+    }
+  >
     <Component {...props} />
   </Suspense>
 );
