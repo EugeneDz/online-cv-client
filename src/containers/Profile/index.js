@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Alert, Modal, Divider, Button, Skeleton } from 'antd';
+import { Spring } from 'react-spring';
 
 import { setCurrentProfile } from 'store/actions/profile';
 
@@ -76,26 +77,30 @@ class Profile extends Component {
           <title>Online CV | Profile</title>
           <meta name="description" content="Online CV for developers" />
         </Helmet>
-        <Section>
-          <header>
-            <h1>Profile Page</h1>
-          </header>
-          {loading && (
-            <div>
-              <Skeleton avatar active paragraph={{ rows: 4 }} />
-            </div>
+        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+          {spring => (
+            <Section style={spring}>
+              <header>
+                <h1>Profile Page</h1>
+              </header>
+              {loading && (
+                <div>
+                  <Skeleton avatar active paragraph={{ rows: 4 }} />
+                </div>
+              )}
+              {error && (
+                <div>
+                  <Alert message={error} type="info" showIcon />
+                  <Divider orientation="right">
+                    <Button type="primary" block>
+                      Create Profile
+                    </Button>
+                  </Divider>
+                </div>
+              )}
+            </Section>
           )}
-          {error && (
-            <div>
-              <Alert message={error} type="info" showIcon />
-              <Divider orientation="right">
-                <Button type="primary" block>
-                  Create Profile
-                </Button>
-              </Divider>
-            </div>
-          )}
-        </Section>
+        </Spring>
       </>
     );
   }
