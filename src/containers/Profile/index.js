@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Alert, Modal, Divider, Button, Skeleton } from 'antd';
 import { Spring } from 'react-spring';
 
@@ -92,9 +93,11 @@ class Profile extends Component {
                 <div>
                   <Alert message={error} type="info" showIcon />
                   <Divider orientation="right">
-                    <Button type="primary" block>
-                      Create Profile
-                    </Button>
+                    <Link to="/profile/create">
+                      <Button type="primary" block>
+                        Create Profile
+                      </Button>
+                    </Link>
                   </Divider>
                 </div>
               )}
