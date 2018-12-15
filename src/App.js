@@ -1,58 +1,17 @@
-import React, { lazy } from 'react';
+import React from 'react';
 import jwtDecode from 'jwt-decode';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { Layout } from 'antd';
 import 'antd/dist/antd.less';
 
+import Routes from 'routes';
 import Navbar from 'views/layouts/Navbar';
 import Footer from 'views/layouts/Footer';
-
-import { waitingComponent, PrivateRoute } from 'utils';
 
 import store from 'store';
 import { setCurrentUser, unsetCurrentUser } from 'store/actions/auth';
 import { unsetCurrentProfile } from 'store/actions/profile';
-
-const Dashboard = lazy(async () => {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return import('containers/Dashboard');
-});
-
-const Profile = lazy(async () => {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return import('containers/Profile');
-});
-
-const EditProfile = lazy(async () => {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return import('containers/Profile/edit');
-});
-
-const AddExperience = lazy(async () => {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return import('containers/Profile/add-experience');
-});
-
-const AddEducation = lazy(async () => {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return import('containers/Profile/add-education');
-});
-
-const Posts = lazy(async () => {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return import('containers/Posts');
-});
-
-const SignIn = lazy(async () => {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return import('containers/SignIn');
-});
-
-const SignUp = lazy(async () => {
-  await new Promise(resolve => setTimeout(resolve, 1000));
-  return import('containers/SignUp');
-});
 
 const { Content } = Layout;
 
@@ -77,24 +36,9 @@ const App = () => (
         <Layout>
           <Navbar />
           <Content>
-            <PrivateRoute exact path="/" component={waitingComponent(Dashboard)} />
-            <PrivateRoute exact path="/profile" component={waitingComponent(Profile)} />
-            <PrivateRoute exact path="/profile/edit" component={waitingComponent(EditProfile)} />
-            <PrivateRoute
-              exact
-              path="/profile/add-experience"
-              component={waitingComponent(AddExperience)}
-            />
-            <PrivateRoute
-              exact
-              path="/profile/add-education"
-              component={waitingComponent(AddEducation)}
-            />
-            <PrivateRoute exact path="/posts" component={waitingComponent(Posts)} />
-            <Route exact path="/sign-in" component={waitingComponent(SignIn)} />
-            <Route exact path="/sign-up" component={waitingComponent(SignUp)} />
-            <Footer />
+            <Routes />
           </Content>
+          <Footer />
         </Layout>
       </Layout>
     </Router>

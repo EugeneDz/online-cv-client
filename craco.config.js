@@ -28,6 +28,7 @@ module.exports = {
           alias: {
             components: './src/components',
             containers: './src/containers',
+            routes: './src/routes',
             config: './src/config',
             store: './src/store',
             views: './src/views',
