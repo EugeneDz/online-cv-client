@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
-import { Modal, Button, Divider, Input, Icon, Row, Col } from 'antd';
+import { Modal, Select, Button, Divider, Input, Icon, Row, Col } from 'antd';
 import { Spring } from 'react-spring';
 
 import { setErrors, unsetErrors } from 'store/actions/errors';
 import { setCurrentProfile } from 'store/actions/profile';
 
 import { API_URL, CURRENT_PROFILE } from 'config';
+import statusList from './data/status-list';
 
 import { Section, ErrorDescr } from './styled-components';
 
-const { Group } = Input;
+const { Group, TextArea } = Input;
+const { Option } = Select;
 
 class CreateProfile extends Component {
   constructor(props) {
@@ -19,7 +21,18 @@ class CreateProfile extends Component {
 
     this.state = {
       loading: false,
-      handle: ''
+      handle: '',
+      status: '',
+      company: '',
+      website: '',
+      location: '',
+      skills: '',
+      github: '',
+      bio: '',
+      youtube: '',
+      twitter: '',
+      facebook: '',
+      linkedin: ''
     };
   }
 
@@ -46,12 +59,41 @@ class CreateProfile extends Component {
       [name]: value
     });
 
+  handleOnSelect = value =>
+    this.setState({
+      status: value
+    });
+
   handleOnSubmit = async e => {
-    const { handle } = this.state;
+    const {
+      handle,
+      status,
+      company,
+      website,
+      location,
+      skills,
+      github,
+      bio,
+      youtube,
+      twitter,
+      facebook,
+      linkedin
+    } = this.state;
     e.preventDefault();
 
     const profile = {
-      handle
+      handle,
+      status,
+      company,
+      website,
+      location,
+      skills,
+      github,
+      bio,
+      youtube,
+      twitter,
+      facebook,
+      linkedin
     };
 
     await this.toggleLoading();
@@ -100,7 +142,20 @@ class CreateProfile extends Component {
   };
 
   render() {
-    const { handle, loading } = this.state;
+    const {
+      handle,
+      company,
+      website,
+      location,
+      skills,
+      loading,
+      github,
+      bio,
+      youtube,
+      twitter,
+      facebook,
+      linkedin
+    } = this.state;
     const { errors } = this.props;
 
     return (
@@ -136,16 +191,230 @@ class CreateProfile extends Component {
                         size="large"
                         onChange={this.handleOnChange}
                       />
-
                       {errors.handle ? (
                         <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
                           {props => <ErrorDescr style={props}> {errors.handle} </ErrorDescr>}
                         </Spring>
                       ) : (
                         <small>
-                          A unique handle for your profile URL. Your full name, company name,
-                          nickname, etc
+                          <sup>&#42;</sup> A unique handle for your profile URL. Your full name,
+                          company name, nickname, etc
                         </small>
+                      )}
+                    </Group>
+                  </Col>
+                  <Col xs={24} md={16} style={{ marginTop: 24 }}>
+                    <Group>
+                      <Select
+                        size="large"
+                        style={{ width: '100%' }}
+                        placeholder="Select your status"
+                        optionFilterProp="children"
+                        onChange={this.handleOnSelect}
+                        filterOption={(input, option) =>
+                          option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                        }
+                      >
+                        {statusList.map(status => (
+                          <Option value={status.value} key={status.id}>
+                            {status.title}
+                          </Option>
+                        ))}
+                      </Select>
+                      {errors.status ? (
+                        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+                          {props => <ErrorDescr style={props}> {errors.status} </ErrorDescr>}
+                        </Spring>
+                      ) : (
+                        <small>
+                          <sup>&#42;</sup> Give us an idea of where you are at in your career
+                        </small>
+                      )}
+                    </Group>
+                  </Col>
+                  <Col xs={24} md={16} style={{ marginTop: 24 }}>
+                    <Group>
+                      <Input
+                        prefix={<Icon type="team" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        name="company"
+                        value={company}
+                        placeholder="Company"
+                        size="large"
+                        onChange={this.handleOnChange}
+                      />
+                      {errors.company ? (
+                        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+                          {props => <ErrorDescr style={props}> {errors.company} </ErrorDescr>}
+                        </Spring>
+                      ) : (
+                        <small>Could be your own company or one you work for</small>
+                      )}
+                    </Group>
+                  </Col>
+                  <Col xs={24} md={16} style={{ marginTop: 24 }}>
+                    <Group>
+                      <Input
+                        prefix={<Icon type="link" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        name="website"
+                        value={website}
+                        placeholder="Website"
+                        size="large"
+                        onChange={this.handleOnChange}
+                      />
+                      {errors.website ? (
+                        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+                          {props => <ErrorDescr style={props}> {errors.website} </ErrorDescr>}
+                        </Spring>
+                      ) : (
+                        <small>Could be your own or a company website</small>
+                      )}
+                    </Group>
+                  </Col>
+                  <Col xs={24} md={16} style={{ marginTop: 24 }}>
+                    <Group>
+                      <Input
+                        prefix={<Icon type="environment" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        name="location"
+                        value={location}
+                        placeholder="Location"
+                        size="large"
+                        onChange={this.handleOnChange}
+                      />
+                      {errors.location ? (
+                        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+                          {props => <ErrorDescr style={props}> {errors.location} </ErrorDescr>}
+                        </Spring>
+                      ) : (
+                        <small>City &amp; state suggested</small>
+                      )}
+                    </Group>
+                  </Col>
+                  <Col xs={24} md={16} style={{ marginTop: 24 }}>
+                    <Group>
+                      <Input
+                        prefix={<Icon type="check-circle" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        name="skills"
+                        value={skills}
+                        placeholder="Skills"
+                        size="large"
+                        onChange={this.handleOnChange}
+                      />
+                      {errors.skills ? (
+                        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+                          {props => <ErrorDescr style={props}> {errors.skills} </ErrorDescr>}
+                        </Spring>
+                      ) : (
+                        <small>
+                          <sup>&#42;</sup> Please use comma separated values (eg.
+                          HTML,CSS,JavaScript,PHP)
+                        </small>
+                      )}
+                    </Group>
+                  </Col>
+                  <Col xs={24} md={16} style={{ marginTop: 24 }}>
+                    <Group>
+                      <Input
+                        prefix={<Icon type="github" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        name="github"
+                        value={github}
+                        placeholder="Github username"
+                        size="large"
+                        onChange={this.handleOnChange}
+                      />
+                      {errors.github ? (
+                        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+                          {props => <ErrorDescr style={props}> {errors.github} </ErrorDescr>}
+                        </Spring>
+                      ) : (
+                        <small>
+                          If you want your latest repos and a Github link, include your username
+                        </small>
+                      )}
+                    </Group>
+                  </Col>
+                  <Col xs={24} md={16} style={{ marginTop: 24 }}>
+                    <Group>
+                      <TextArea
+                        name="bio"
+                        value={bio}
+                        placeholder="A short bio of yourself"
+                        rows={6}
+                        onChange={this.handleOnChange}
+                      />
+                    </Group>
+                  </Col>
+                </Row>
+                <Row gutter={16} type="flex" justify="center">
+                  <Col xs={24} md={16}>
+                    <Divider orientation="left">Social Network Links</Divider>
+                  </Col>
+                </Row>
+                <Row gutter={16} type="flex" justify="center">
+                  <Col xs={24} md={16} style={{ marginTop: 24 }}>
+                    <Group>
+                      <Input
+                        prefix={<Icon type="youtube" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        name="youtube"
+                        value={youtube}
+                        placeholder="YouTube"
+                        size="large"
+                        onChange={this.handleOnChange}
+                      />
+                      {errors.youtube && (
+                        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+                          {props => <ErrorDescr style={props}> {errors.youtube} </ErrorDescr>}
+                        </Spring>
+                      )}
+                    </Group>
+                  </Col>
+                  <Col xs={24} md={16} style={{ marginTop: 24 }}>
+                    <Group>
+                      <Input
+                        prefix={<Icon type="twitter" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        name="twitter"
+                        value={twitter}
+                        placeholder="Twitter"
+                        size="large"
+                        onChange={this.handleOnChange}
+                      />
+                      {errors.twitter && (
+                        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+                          {props => <ErrorDescr style={props}> {errors.twitter} </ErrorDescr>}
+                        </Spring>
+                      )}
+                    </Group>
+                  </Col>
+                  <Col xs={24} md={16} style={{ marginTop: 24 }}>
+                    <Group>
+                      <Input
+                        prefix={<Icon type="facebook" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        name="facebook"
+                        value={facebook}
+                        placeholder="Facebook"
+                        size="large"
+                        onChange={this.handleOnChange}
+                      />
+                      {errors.facebook && (
+                        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+                          {props => <ErrorDescr style={props}> {errors.facebook} </ErrorDescr>}
+                        </Spring>
+                      )}
+                    </Group>
+                  </Col>
+                  <Col xs={24} md={16} style={{ marginTop: 24 }}>
+                    <Group>
+                      <Input
+                        prefix={<Icon type="linkedin" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        name="linkedin"
+                        value={linkedin}
+                        placeholder="LinkedIn"
+                        size="large"
+                        onChange={this.handleOnChange}
+                      />
+                      {errors.linkedin && (
+                        <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
+                          {props => <ErrorDescr style={props}> {errors.linkedin} </ErrorDescr>}
+                        </Spring>
                       )}
                     </Group>
                   </Col>
