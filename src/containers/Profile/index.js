@@ -104,7 +104,7 @@ class Profile extends Component {
                         title={<Avatar src={auth.user.avatar} />}
                         extra={
                           <ButtonGroup>
-                            <Link to="/profile/create">
+                            <Link to="/profile/edit">
                               <Button type="primary">
                                 <Icon type="edit" /> Edit Profile
                               </Button>

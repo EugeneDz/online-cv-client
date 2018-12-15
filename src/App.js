@@ -24,9 +24,9 @@ const Profile = lazy(async () => {
   return import('containers/Profile');
 });
 
-const CreateProfile = lazy(async () => {
+const EditProfile = lazy(async () => {
   await new Promise(resolve => setTimeout(resolve, 1000));
-  return import('containers/Profile/create');
+  return import('containers/Profile/edit');
 });
 
 const Posts = lazy(async () => {
@@ -69,11 +69,7 @@ const App = () => (
           <Content>
             <PrivateRoute exact path="/" component={waitingComponent(Dashboard)} />
             <PrivateRoute exact path="/profile" component={waitingComponent(Profile)} />
-            <PrivateRoute
-              exact
-              path="/profile/create"
-              component={waitingComponent(CreateProfile)}
-            />
+            <PrivateRoute exact path="/profile/edit" component={waitingComponent(EditProfile)} />
             <PrivateRoute exact path="/posts" component={waitingComponent(Posts)} />
             <Route exact path="/sign-in" component={waitingComponent(SignIn)} />
             <Route exact path="/sign-up" component={waitingComponent(SignUp)} />

@@ -16,12 +16,13 @@ import { Section, ErrorDescr } from './styled-components';
 const { Group, TextArea } = Input;
 const { Option } = Select;
 
-class CreateProfile extends Component {
+class EditProfile extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      loading: true,
+      loading: false,
+      profileLoading: true,
       handle: '',
       status: '',
       company: '',
@@ -41,13 +42,13 @@ class CreateProfile extends Component {
     const { profile } = this.props;
 
     if (isEmpty(profile)) this.fetchCurrentProfile();
-    else this.hidateProfile(profile);
+    else this.hydrateProfile(profile);
   };
 
   componentWillReceiveProps = nextProps => {
     const { profile } = nextProps;
 
-    if (!isEmpty(profile)) this.hidateProfile(profile);
+    if (!isEmpty(profile)) this.hydrateProfile(profile);
   };
 
   componentWillUnmount = () => {
@@ -56,23 +57,23 @@ class CreateProfile extends Component {
     _unsetErrors();
   };
 
-  hidateProfile = profile => {
-    const hidateProfile = {};
+  hydrateProfile = profile => {
+    const hydrateProfile = {};
 
-    if (!isEmpty(profile.handle)) hidateProfile.handle = profile.handle;
-    if (!isEmpty(profile.status)) hidateProfile.status = profile.status;
-    if (!isEmpty(profile.company)) hidateProfile.company = profile.company;
-    if (!isEmpty(profile.website)) hidateProfile.website = profile.website;
-    if (!isEmpty(profile.location)) hidateProfile.location = profile.location;
-    if (!isEmpty(profile.skills)) hidateProfile.skills = profile.skills.join(',');
-    if (!isEmpty(profile.githubusername)) hidateProfile.githubusername = profile.githubusername;
-    if (!isEmpty(profile.bio)) hidateProfile.bio = profile.bio;
-    if (!isEmpty(profile.social.youtube)) hidateProfile.youtube = profile.social.youtube;
-    if (!isEmpty(profile.social.twitter)) hidateProfile.twitter = profile.social.twitter;
-    if (!isEmpty(profile.social.facebook)) hidateProfile.facebook = profile.social.facebook;
-    if (!isEmpty(profile.social.linkedin)) hidateProfile.linkedin = profile.social.linkedin;
+    if (!isEmpty(profile.handle)) hydrateProfile.handle = profile.handle;
+    if (!isEmpty(profile.status)) hydrateProfile.status = profile.status;
+    if (!isEmpty(profile.company)) hydrateProfile.company = profile.company;
+    if (!isEmpty(profile.website)) hydrateProfile.website = profile.website;
+    if (!isEmpty(profile.location)) hydrateProfile.location = profile.location;
+    if (!isEmpty(profile.skills)) hydrateProfile.skills = profile.skills.join(',');
+    if (!isEmpty(profile.githubusername)) hydrateProfile.githubusername = profile.githubusername;
+    if (!isEmpty(profile.bio)) hydrateProfile.bio = profile.bio;
+    if (!isEmpty(profile.social.youtube)) hydrateProfile.youtube = profile.social.youtube;
+    if (!isEmpty(profile.social.twitter)) hydrateProfile.twitter = profile.social.twitter;
+    if (!isEmpty(profile.social.facebook)) hydrateProfile.facebook = profile.social.facebook;
+    if (!isEmpty(profile.social.linkedin)) hydrateProfile.linkedin = profile.social.linkedin;
 
-    this.setState({ ...hidateProfile, loading: false });
+    this.setState({ ...hydrateProfile, profileLoading: false });
   };
 
   fetchCurrentProfile = async () => {
@@ -97,7 +98,7 @@ class CreateProfile extends Component {
       if (status === 404 && data.noprofile) {
         this.toggleLoading();
       } else {
-        this.toggleLoading();
+        this.setState({ profileLoading: false });
         _setCurrentProfile(data);
       }
     } catch (err) {
@@ -211,6 +212,7 @@ class CreateProfile extends Component {
   render() {
     const {
       loading,
+      profileLoading,
       handle,
       status,
       company,
@@ -247,7 +249,7 @@ class CreateProfile extends Component {
                   </Col>
                 </Row>
               </header>
-              {loading ? (
+              {profileLoading ? (
                 <Row gutter={16} type="flex" justify="center">
                   <Col xs={24} md={16}>
                     <Spin indicator={<Icon type="loading" style={{ fontSize: 24 }} spin />} />
@@ -533,4 +535,4 @@ export default connect(
     unsetErrors,
     setCurrentProfile
   }
-)(CreateProfile);
+)(EditProfile);
