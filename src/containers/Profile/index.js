@@ -121,7 +121,7 @@ class Profile extends Component {
                               </Link>
                             </Button>
                             <Button type="primary">
-                              <Link to="/profile/add-experience">
+                              <Link to="/profile/add-education">
                                 <Icon type="plus-circle" /> Add Education
                               </Link>
                             </Button>
