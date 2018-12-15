@@ -88,8 +88,14 @@ class Profile extends Component {
           {spring => (
             <Section style={spring}>
               <header>
-                <h1>Profile</h1>
-                <div>Welcome {auth.user.name}</div>
+                <Row type="flex" justify="center">
+                  <Col span={24}>
+                    <h1>Profile</h1>
+                  </Col>
+                  <Col span={24}>
+                    <p>Welcome {auth.user.name}</p>
+                  </Col>
+                </Row>
               </header>
               <Divider />
               {loading ? (
@@ -109,9 +115,11 @@ class Profile extends Component {
                                 <Icon type="edit" /> Edit Profile
                               </Button>
                             </Link>
-                            <Button type="primary">
-                              <Icon type="plus-circle" /> Add Experience
-                            </Button>
+                            <Link to="/profile/add-experience">
+                              <Button type="primary">
+                                <Icon type="plus-circle" /> Add Experience
+                              </Button>
+                            </Link>
                             <Button type="primary">
                               <Icon type="plus-circle" /> Add Education
                             </Button>

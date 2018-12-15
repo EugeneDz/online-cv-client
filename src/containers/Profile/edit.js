@@ -231,7 +231,7 @@ class EditProfile extends Component {
     return (
       <>
         <Helmet>
-          <title>Online CV | Create Profile</title>
+          <title>Online CV | Edit Profile</title>
           <meta name="description" content="Online CV for developers" />
         </Helmet>
         <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
@@ -240,7 +240,7 @@ class EditProfile extends Component {
               <header>
                 <Row type="flex" justify="center">
                   <Col span={24}>
-                    <h1 style={{ textAlign: 'center' }}>Create Profile</h1>
+                    <h1 style={{ textAlign: 'center' }}>Edit Profile</h1>
                   </Col>
                   <Col span={24}>
                     <p style={{ textAlign: 'center' }}>
