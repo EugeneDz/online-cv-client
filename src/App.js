@@ -34,6 +34,11 @@ const AddExperience = lazy(async () => {
   return import('containers/Profile/add-experience');
 });
 
+const AddEducation = lazy(async () => {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  return import('containers/Profile/add-education');
+});
+
 const Posts = lazy(async () => {
   await new Promise(resolve => setTimeout(resolve, 1000));
   return import('containers/Posts');
@@ -79,6 +84,11 @@ const App = () => (
               exact
               path="/profile/add-experience"
               component={waitingComponent(AddExperience)}
+            />
+            <PrivateRoute
+              exact
+              path="/profile/add-education"
+              component={waitingComponent(AddEducation)}
             />
             <PrivateRoute exact path="/posts" component={waitingComponent(Posts)} />
             <Route exact path="/sign-in" component={waitingComponent(SignIn)} />
