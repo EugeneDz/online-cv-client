@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Alert, Modal, Divider, Button, Skeleton } from 'antd';
+import { Alert, Avatar, Icon, Modal, Table, Card, Divider, Button, Skeleton, Row, Col } from 'antd';
 import { Spring } from 'react-spring';
 
 import { setCurrentProfile } from 'store/actions/profile';
@@ -11,13 +11,18 @@ import { API_URL, CURRENT_PROFILE } from 'config';
 
 import { Section } from './styled-components';
 
+import educationColumns from './data/columns-education';
+import experienceColumns from './data/columns-experience';
+
+const { Group: ButtonGroup } = Button;
+
 class Profile extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       loading: true,
-      error: ''
+      noprofile: ''
     };
   }
 
@@ -43,7 +48,7 @@ class Profile extends Component {
 
       if (status === 404 && data.noprofile) {
         this.toggleLoading();
-        this.setState({ error: data.noprofile });
+        this.setState({ noprofile: data.noprofile });
       } else {
         this.toggleLoading();
         _setCurrentProfile(data);
@@ -70,7 +75,8 @@ class Profile extends Component {
     });
 
   render() {
-    const { error, loading } = this.state;
+    const { noprofile, loading } = this.state;
+    const { auth } = this.props;
 
     return (
       <>
@@ -82,16 +88,60 @@ class Profile extends Component {
           {spring => (
             <Section style={spring}>
               <header>
-                <h1>Profile Page</h1>
+                <h1>Profile</h1>
+                <div>Welcome {auth.user.name}</div>
               </header>
-              {loading && (
+              <Divider />
+              {loading ? (
                 <div>
                   <Skeleton avatar active paragraph={{ rows: 4 }} />
                 </div>
-              )}
-              {error && (
+              ) : (
                 <div>
-                  <Alert message={error} type="info" showIcon />
+                  <Row>
+                    <Col>
+                      <Card
+                        title={<Avatar src={auth.user.avatar} />}
+                        extra={
+                          <ButtonGroup>
+                            <Button type="primary">
+                              <Icon type="edit" /> Edit Profile
+                            </Button>
+                            <Button type="primary">
+                              <Icon type="plus-circle" /> Add Experience
+                            </Button>
+                            <Button type="primary">
+                              <Icon type="plus-circle" /> Add Education
+                            </Button>
+                          </ButtonGroup>
+                        }
+                        style={{ width: '100%' }}
+                      >
+                        <Table
+                          title={() => 'Experience'}
+                          dataSource={[
+                            {
+                              key: '1',
+                              company: 'Eleken',
+                              title: 'Lead Developer',
+                              years: '2008-09-01 - 2011-05-01'
+                            }
+                          ]}
+                          columns={experienceColumns}
+                        />
+                        <Table
+                          title={() => 'Education'}
+                          dataSource={[]}
+                          columns={educationColumns}
+                        />
+                      </Card>
+                    </Col>
+                  </Row>
+                </div>
+              )}
+              {noprofile && (
+                <div>
+                  <Alert message={noprofile} type="info" showIcon />
                   <Divider orientation="right">
                     <Link to="/profile/create">
                       <Button type="primary" block>
@@ -109,8 +159,9 @@ class Profile extends Component {
   }
 }
 
-const mapStateToProps = ({ profile }) => ({
-  profile
+const mapStateToProps = ({ auth, profile }) => ({
+  profile,
+  auth
 });
 
 export default connect(
