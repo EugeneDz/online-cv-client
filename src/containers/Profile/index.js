@@ -104,9 +104,11 @@ class Profile extends Component {
                         title={<Avatar src={auth.user.avatar} />}
                         extra={
                           <ButtonGroup>
-                            <Button type="primary">
-                              <Icon type="edit" /> Edit Profile
-                            </Button>
+                            <Link to="/profile/create">
+                              <Button type="primary">
+                                <Icon type="edit" /> Edit Profile
+                              </Button>
+                            </Link>
                             <Button type="primary">
                               <Icon type="plus-circle" /> Add Experience
                             </Button>

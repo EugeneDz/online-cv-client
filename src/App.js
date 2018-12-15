@@ -12,6 +12,7 @@ import { waitingComponent, PrivateRoute } from 'utils';
 
 import store from 'store';
 import { setCurrentUser, unsetCurrentUser } from 'store/actions/auth';
+import { unsetCurrentProfile } from 'store/actions/profile';
 
 const Dashboard = lazy(async () => {
   await new Promise(resolve => setTimeout(resolve, 1000));
@@ -53,6 +54,7 @@ if (localStorage.token) {
   if (decodedUser.exp < currentTime) {
     localStorage.clear();
     store.dispatch(unsetCurrentUser());
+    store.dispatch(unsetCurrentProfile());
 
     window.location.href = '/sign-in';
   }
