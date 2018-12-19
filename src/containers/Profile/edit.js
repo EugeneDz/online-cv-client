@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Spin, Modal, Select, Button, Divider, Input, Icon, Row, Col } from 'antd';
 import { Spring } from 'react-spring';
 import { isEmpty } from 'lodash';
@@ -11,7 +12,7 @@ import { setCurrentProfile } from 'store/actions/profile';
 import { API_URL, CURRENT_PROFILE } from 'config';
 import statusList from './data/status-list';
 
-import { Section, ErrorDescr } from './styled-components';
+import { Section, NavWrap, ErrorDescr } from './styled-components';
 
 const { Group, TextArea } = Input;
 const { Option } = Select;
@@ -234,6 +235,17 @@ class EditProfile extends Component {
           <title>Online CV | Edit Profile</title>
           <meta name="description" content="Online CV for developers" />
         </Helmet>
+        <NavWrap>
+          <Row type="flex" justify="left">
+            <Col>
+              <Button type="primary">
+                <Link to="/profile">
+                  <Icon type="left" /> Go back
+                </Link>
+              </Button>
+            </Col>
+          </Row>
+        </NavWrap>
         <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
           {section => (
             <Section style={section}>

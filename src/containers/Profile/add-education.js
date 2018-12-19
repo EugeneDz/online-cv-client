@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Spring } from 'react-spring';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
@@ -10,7 +11,7 @@ import { setErrors, unsetErrors } from 'store/actions/errors';
 
 import { API_URL, PROFILE_ADD_EDUCATION } from 'config';
 
-import { Section, ErrorDescr } from './styled-components';
+import { Section, NavWrap, ErrorDescr } from './styled-components';
 
 const { Group, TextArea } = Input;
 
@@ -124,6 +125,17 @@ class AddEducation extends Component {
           <title>Online CV | Add Education</title>
           <meta name="description" content="Online CV for developers" />
         </Helmet>
+        <NavWrap>
+          <Row type="flex" justify="left">
+            <Col>
+              <Button type="primary">
+                <Link to="/profile">
+                  <Icon type="left" /> Go back
+                </Link>
+              </Button>
+            </Col>
+          </Row>
+        </NavWrap>
         <Spring from={{ opacity: 0 }} to={{ opacity: 1 }}>
           {spring => (
             <Section style={spring}>

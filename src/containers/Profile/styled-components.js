@@ -8,6 +8,14 @@ export const Section = styled.section`
   margin: 24px auto;
 `;
 
+export const NavWrap = styled.section`
+  min-height: auto;
+  max-width: 1024px;
+  background: transparent;
+  padding: 0;
+  margin: 24px auto;
+`;
+
 export const ErrorDescr = styled.small`
   color: #d14d4b;
 `;
