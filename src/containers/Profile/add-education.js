@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Spring } from 'react-spring';
+import { isEmpty } from 'lodash';
 import moment from 'moment';
 import { Modal, Divider, Button, Checkbox, Row, Col, Input, DatePicker, Icon } from 'antd';
 
@@ -103,8 +104,8 @@ class AddEducation extends Component {
     const education = {
       school,
       fieldofstudy,
-      from: moment(from).format('YYYY-MM-DD'),
-      to: moment(to).format('YYYY-MM-DD'),
+      from: !isEmpty(from) ? moment(from).format('YYYY-MM-DD') : '',
+      to: !isEmpty(to) ? moment(to).format('YYYY-MM-DD') : '',
       current,
       description
     };
