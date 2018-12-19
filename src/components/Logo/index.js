@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Navbar = () => (
+import Title from './styled-components';
+
+const Logo = () => (
   <Link to="/">
-    <span>Online CV</span>
+    <Title>Online CV</Title>
   </Link>
 );
 
-export default Navbar;
+export default Logo;

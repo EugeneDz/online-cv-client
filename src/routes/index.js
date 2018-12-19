@@ -45,7 +45,7 @@ const SignUp = lazy(async () => {
 
 const Routes = () => (
   <>
-    <PrivateRoute exact path="/" component={waitingComponent(Dashboard)} />
+    <Route exact path="/" component={waitingComponent(Dashboard)} />
     <PrivateRoute exact path="/profile" component={waitingComponent(Profile)} />
     <PrivateRoute exact path="/profile/edit" component={waitingComponent(EditProfile)} />
     <PrivateRoute
