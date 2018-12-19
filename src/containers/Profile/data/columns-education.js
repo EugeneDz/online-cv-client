@@ -1,6 +1,12 @@
 import React from 'react';
 import { Button } from 'antd';
 
+const deleteEducationRecord = id => {
+  const deleteEvent = new CustomEvent('deleteEducationRecord', { detail: id });
+
+  dispatchEvent(deleteEvent);
+};
+
 export default [
   {
     title: 'School',
@@ -22,8 +28,8 @@ export default [
     key: 'action',
     align: 'right',
     render: record => (
-      <Button type="default" icon="delete">
-        Delete {record.key}
+      <Button type="default" icon="delete" onClick={() => deleteEducationRecord(record.key)}>
+        Delete
       </Button>
     )
   }

@@ -2,12 +2,18 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import { Alert, Avatar, Icon, Modal, Table, Card, Divider, Button, Skeleton, Row, Col } from 'antd';
 import { Spring } from 'react-spring';
 
 import { setCurrentProfile } from 'store/actions/profile';
 
-import { API_URL, CURRENT_PROFILE } from 'config';
+import {
+  API_URL,
+  CURRENT_PROFILE,
+  PROFILE_DELETE_EXPERIENCE,
+  PROFILE_DELETE_EDUCATION
+} from 'config';
 
 import { Section } from './styled-components';
 
@@ -26,7 +32,17 @@ class Profile extends Component {
     };
   }
 
-  componentDidMount = () => this.fetchCurrentProfile();
+  componentDidMount = () => {
+    this.fetchCurrentProfile();
+
+    window.addEventListener('deleteExperienceRecord', this.deleteExperienceRecord);
+    window.addEventListener('deleteEducationRecord', this.deleteEducationRecord);
+  };
+
+  componentWillUnmount = () => {
+    window.removeEventListener('deleteExperienceRecord', this.deleteExperienceRecord);
+    window.removeEventListener('deleteEducationRecord', this.deleteEducationRecord);
+  };
 
   fetchCurrentProfile = async () => {
     const { token } = localStorage;
@@ -62,6 +78,76 @@ class Profile extends Component {
     }
   };
 
+  deleteExperienceRecord = async ({ detail }) => {
+    const { token } = localStorage;
+    const { setCurrentProfile: _setCurrentProfile } = this.props;
+    this.toggleLoading();
+
+    try {
+      const options = {
+        method: 'DELETE',
+        headers: {
+          Authorization: token
+        }
+      };
+      const res = await fetch(`${API_URL}${PROFILE_DELETE_EXPERIENCE}${detail}`, options);
+      const data = await res.json();
+      const status = await res.status;
+
+      // Add promise delay to prevent UI blinking when the response does to fast.
+      await new Promise(resolve => setTimeout(resolve, 400));
+
+      if (status === 404 && data.noprofile) {
+        this.toggleLoading();
+        this.setState({ noprofile: data.noprofile });
+      } else {
+        this.toggleLoading();
+        _setCurrentProfile(data);
+      }
+    } catch (err) {
+      this.onError();
+      this.toggleLoading();
+
+      // Log the error to an error reporting service
+      console.log(err);
+    }
+  };
+
+  deleteEducationRecord = async ({ detail }) => {
+    const { token } = localStorage;
+    const { setCurrentProfile: _setCurrentProfile } = this.props;
+    this.toggleLoading();
+
+    try {
+      const options = {
+        method: 'DELETE',
+        headers: {
+          Authorization: token
+        }
+      };
+      const res = await fetch(`${API_URL}${PROFILE_DELETE_EDUCATION}${detail}`, options);
+      const data = await res.json();
+      const status = await res.status;
+
+      // Add promise delay to prevent UI blinking when the response does to fast.
+      await new Promise(resolve => setTimeout(resolve, 400));
+
+      if (status === 404 && data.noprofile) {
+        this.toggleLoading();
+        this.setState({ noprofile: data.noprofile });
+      } else {
+        this.toggleLoading();
+        _setCurrentProfile(data);
+      }
+    } catch (err) {
+      this.onError();
+      this.toggleLoading();
+
+      // Log the error to an error reporting service
+      console.log(err);
+    }
+  };
+
   toggleLoading = () => {
     const { loading } = this.state;
 
@@ -74,9 +160,33 @@ class Profile extends Component {
       content: 'We are working on solving the issue.'
     });
 
+  getExperienceList = experience =>
+    experience.length
+      ? experience.map(item => ({
+          key: item._id,
+          company: item.company,
+          title: item.title,
+          years: `${moment(item.from).format('YYYY-MM-DD')} / ${
+            item.current ? 'current time' : moment(item.to).format('YYYY-MM-DD')
+          }`
+        }))
+      : [];
+
+  getEducationList = education =>
+    education.length
+      ? education.map(item => ({
+          key: item._id,
+          school: item.school,
+          fieldofstudy: item.fieldofstudy,
+          years: `${moment(item.from).format('YYYY-MM-DD')} / ${
+            item.current ? 'current time' : moment(item.to).format('YYYY-MM-DD')
+          }`
+        }))
+      : [];
+
   render() {
     const { noprofile, loading } = this.state;
-    const { auth } = this.props;
+    const { auth, profile } = this.props;
 
     return (
       <>
@@ -131,19 +241,12 @@ class Profile extends Component {
                       >
                         <Table
                           title={() => 'Experience'}
-                          dataSource={[
-                            {
-                              key: '1',
-                              company: 'Eleken',
-                              title: 'Lead Developer',
-                              years: '2008-09-01 - 2011-05-01'
-                            }
-                          ]}
+                          dataSource={this.getExperienceList(profile.experience || [])}
                           columns={experienceColumns}
                         />
                         <Table
                           title={() => 'Education'}
-                          dataSource={[]}
+                          dataSource={this.getEducationList(profile.education || [])}
                           columns={educationColumns}
                         />
                       </Card>

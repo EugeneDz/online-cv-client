@@ -23,7 +23,9 @@
     "Blob": true,
     "navigator": true,
     "import": true,
-    "fetch": true
+    "fetch": true,
+    "dispatchEvent": true,
+    "CustomEvent": true
   },
   "settings": {
     "import/resolver": {

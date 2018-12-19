@@ -110,7 +110,7 @@ class AddExperience extends Component {
       current,
       description
     };
-    console.log(from);
+
     await this.toggleLoading();
     await this.addExperience(experience);
   };
