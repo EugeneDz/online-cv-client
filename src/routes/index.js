@@ -8,6 +8,11 @@ const Dashboard = lazy(async () => {
   return import('containers/Dashboard');
 });
 
+const Details = lazy(async () => {
+  await new Promise(resolve => setTimeout(resolve, 1000));
+  return import('containers/Dashboard/details');
+});
+
 const Profile = lazy(async () => {
   await new Promise(resolve => setTimeout(resolve, 1000));
   return import('containers/Profile');
@@ -46,6 +51,7 @@ const SignUp = lazy(async () => {
 const Routes = () => (
   <>
     <Route exact path="/" component={waitingComponent(Dashboard)} />
+    <Route exact path="/profile/:profile_id" component={waitingComponent(Details)} />
     <PrivateRoute exact path="/profile" component={waitingComponent(Profile)} />
     <PrivateRoute exact path="/profile/edit" component={waitingComponent(EditProfile)} />
     <PrivateRoute
