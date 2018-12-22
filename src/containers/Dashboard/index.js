@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link } from 'react-router-dom';
-import { Skeleton, Modal, Card, Avatar, Tag, Button, Icon, Divider, Row, Col } from 'antd';
+import { Skeleton, Card, Avatar, Tag, Button, Icon, Divider, Row, Col } from 'antd';
 import { Spring } from 'react-spring';
+
+import withError from 'hoc/with-error';
 
 import { API_URL, PROFILE_GET_ALL } from 'config';
 
@@ -26,6 +28,8 @@ class Dashboard extends Component {
   };
 
   fetchProfiles = async () => {
+    const { onError } = this.props;
+
     try {
       const options = {
         method: 'GET'
@@ -45,7 +49,7 @@ class Dashboard extends Component {
         this.setState({ profiles: data });
       }
     } catch (err) {
-      this.onError();
+      onError();
       this.toggleLoading();
 
       // Log the error to an error reporting service
@@ -59,14 +63,9 @@ class Dashboard extends Component {
     this.setState({ loading: !loading });
   };
 
-  onError = () =>
-    Modal.error({
-      title: 'Oops, it seems an error occurred!',
-      content: 'We are working on solving the issue.'
-    });
-
   render() {
     const { noprofiles, profiles, loading } = this.state;
+
     return (
       <>
         <Helmet>
@@ -160,4 +159,4 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard;
+export default withError(Dashboard);

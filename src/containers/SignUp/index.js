@@ -6,6 +6,8 @@ import { Spring } from 'react-spring';
 
 import { setErrors, unsetErrors } from 'store/actions/errors';
 
+import withError from 'hoc/with-error';
+
 import { API_URL, USERS_REGISTER } from 'config';
 
 import { Section, ErrorDescr } from './styled-components';
@@ -49,15 +51,8 @@ class SignUp extends Component {
       }
     });
 
-  onError = () =>
-    Modal.error({
-      title: 'Oops, it seems an error occurred!',
-      content: 'We are working on solving the issue.'
-    });
-
   handleOnChange = ({ target: { name, value } }) => {
-    const { errors } = this.props;
-    const { setErrors: _setErrors } = this.props;
+    const { errors, setErrors: _setErrors } = this.props;
 
     if (errors[name]) {
       _setErrors({ ...errors, [name]: '' });
@@ -83,7 +78,7 @@ class SignUp extends Component {
   };
 
   registerUser = async user => {
-    const { setErrors: _setErrors } = this.props;
+    const { setErrors: _setErrors, onError } = this.props;
 
     try {
       const options = {
@@ -104,7 +99,7 @@ class SignUp extends Component {
       if (status === 400) _setErrors(data);
       else this.onSuccess();
     } catch (err) {
-      this.onError();
+      onError();
 
       // Log the error to an error reporting service
       console.log(err);
@@ -241,4 +236,4 @@ export default connect(
     setErrors,
     unsetErrors
   }
-)(SignUp);
+)(withError(SignUp));

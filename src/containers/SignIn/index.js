@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
-import { Modal, Button, Divider, Input, Icon, Row, Col } from 'antd';
+import { Button, Divider, Input, Icon, Row, Col } from 'antd';
 import { Spring } from 'react-spring';
 
 import { setErrors, unsetErrors } from 'store/actions/errors';
 import { setCurrentUser } from 'store/actions/auth';
+
+import withError from 'hoc/with-error';
 
 import { API_URL, USERS_LOGIN } from 'config';
 
@@ -37,12 +39,6 @@ class SignIn extends Component {
     this.setState({ loading: !loading });
   };
 
-  onError = () =>
-    Modal.error({
-      title: 'Oops, it seems an error occurred!',
-      content: 'We are working on solving the issue.'
-    });
-
   handleOnChange = ({ target: { name, value } }) =>
     this.setState({
       [name]: value
@@ -62,7 +58,7 @@ class SignIn extends Component {
   };
 
   loginUser = async user => {
-    const { setErrors: _setErrors, setCurrentUser: _setCurrentUser } = this.props;
+    const { setErrors: _setErrors, setCurrentUser: _setCurrentUser, onError } = this.props;
 
     try {
       const options = {
@@ -96,7 +92,7 @@ class SignIn extends Component {
         push('/');
       }
     } catch (err) {
-      this.onError();
+      onError();
       this.toggleLoading();
 
       // Log the error to an error reporting service
@@ -201,4 +197,4 @@ export default connect(
     unsetErrors,
     setCurrentUser
   }
-)(SignIn);
+)(withError(SignIn));

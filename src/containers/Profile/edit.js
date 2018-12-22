@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Spin, Modal, Select, Button, Divider, Input, Icon, Row, Col } from 'antd';
+import { Spin, Select, Button, Divider, Input, Icon, Row, Col } from 'antd';
 import { Spring } from 'react-spring';
 import { isEmpty } from 'lodash';
 
 import { setErrors, unsetErrors } from 'store/actions/errors';
 import { setCurrentProfile } from 'store/actions/profile';
+
+import withError from 'hoc/with-error';
 
 import { API_URL, CURRENT_PROFILE } from 'config';
 import statusList from './data/status-list';
@@ -79,7 +81,7 @@ class EditProfile extends Component {
 
   fetchCurrentProfile = async () => {
     const { token } = localStorage;
-    const { setCurrentProfile: _setCurrentProfile } = this.props;
+    const { setCurrentProfile: _setCurrentProfile, onError } = this.props;
 
     try {
       const options = {
@@ -103,7 +105,7 @@ class EditProfile extends Component {
         _setCurrentProfile(data);
       }
     } catch (err) {
-      this.onError();
+      onError();
       this.toggleLoading();
 
       // Log the error to an error reporting service
@@ -116,12 +118,6 @@ class EditProfile extends Component {
 
     this.setState({ loading: !loading });
   };
-
-  onError = () =>
-    Modal.error({
-      title: 'Oops, it seems an error occurred!',
-      content: 'We are working on solving the issue.'
-    });
 
   handleOnChange = ({ target: { name, value } }) =>
     this.setState({
@@ -170,7 +166,7 @@ class EditProfile extends Component {
   };
 
   createProfile = async profile => {
-    const { setErrors: _setErrors, setCurrentProfile: _setCurrentProfile } = this.props;
+    const { setErrors: _setErrors, setCurrentProfile: _setCurrentProfile, onError } = this.props;
 
     try {
       const options = {
@@ -202,7 +198,7 @@ class EditProfile extends Component {
         push('/profile');
       }
     } catch (err) {
-      this.onError();
+      onError();
       this.toggleLoading();
 
       // Log the error to an error reporting service
@@ -547,4 +543,4 @@ export default connect(
     unsetErrors,
     setCurrentProfile
   }
-)(EditProfile);
+)(withError(EditProfile));

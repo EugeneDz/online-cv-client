@@ -3,10 +3,12 @@ import { Helmet } from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
-import { Alert, Avatar, Icon, Modal, Table, Card, Divider, Button, Skeleton, Row, Col } from 'antd';
+import { Alert, Avatar, Icon, Table, Card, Divider, Button, Skeleton, Row, Col } from 'antd';
 import { Spring } from 'react-spring';
 
 import { setCurrentProfile } from 'store/actions/profile';
+
+import withError from 'hoc/with-error';
 
 import {
   API_URL,
@@ -46,7 +48,7 @@ class Profile extends Component {
 
   fetchCurrentProfile = async () => {
     const { token } = localStorage;
-    const { setCurrentProfile: _setCurrentProfile } = this.props;
+    const { setCurrentProfile: _setCurrentProfile, onError } = this.props;
 
     try {
       const options = {
@@ -70,7 +72,7 @@ class Profile extends Component {
         _setCurrentProfile(data);
       }
     } catch (err) {
-      this.onError();
+      onError();
       this.toggleLoading();
 
       // Log the error to an error reporting service
@@ -80,7 +82,7 @@ class Profile extends Component {
 
   deleteExperienceRecord = async ({ detail }) => {
     const { token } = localStorage;
-    const { setCurrentProfile: _setCurrentProfile } = this.props;
+    const { setCurrentProfile: _setCurrentProfile, onError } = this.props;
     this.toggleLoading();
 
     try {
@@ -105,7 +107,7 @@ class Profile extends Component {
         _setCurrentProfile(data);
       }
     } catch (err) {
-      this.onError();
+      onError();
       this.toggleLoading();
 
       // Log the error to an error reporting service
@@ -115,7 +117,7 @@ class Profile extends Component {
 
   deleteEducationRecord = async ({ detail }) => {
     const { token } = localStorage;
-    const { setCurrentProfile: _setCurrentProfile } = this.props;
+    const { setCurrentProfile: _setCurrentProfile, onError } = this.props;
     this.toggleLoading();
 
     try {
@@ -140,7 +142,7 @@ class Profile extends Component {
         _setCurrentProfile(data);
       }
     } catch (err) {
-      this.onError();
+      onError();
       this.toggleLoading();
 
       // Log the error to an error reporting service
@@ -153,12 +155,6 @@ class Profile extends Component {
 
     this.setState({ loading: !loading });
   };
-
-  onError = () =>
-    Modal.error({
-      title: 'Oops, it seems an error occurred!',
-      content: 'We are working on solving the issue.'
-    });
 
   getExperienceList = experience =>
     experience.length
@@ -284,4 +280,4 @@ export default connect(
   {
     setCurrentProfile
   }
-)(Profile);
+)(withError(Profile));

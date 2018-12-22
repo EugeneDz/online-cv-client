@@ -5,9 +5,11 @@ import { Link } from 'react-router-dom';
 import { Spring } from 'react-spring';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
-import { Modal, Divider, Button, Checkbox, Row, Col, Input, DatePicker, Icon } from 'antd';
+import { Divider, Button, Checkbox, Row, Col, Input, DatePicker, Icon } from 'antd';
 
 import { setErrors, unsetErrors } from 'store/actions/errors';
+
+import withError from 'hoc/with-error';
 
 import { API_URL, PROFILE_ADD_EXPERIENCE } from 'config';
 
@@ -37,7 +39,7 @@ class AddExperience extends Component {
   };
 
   addExperience = async experience => {
-    const { setErrors: _setErrors } = this.props;
+    const { setErrors: _setErrors, onError } = this.props;
 
     try {
       const options = {
@@ -68,7 +70,7 @@ class AddExperience extends Component {
         push('/profile');
       }
     } catch (err) {
-      this.onError();
+      onError();
       this.toggleLoading();
 
       // Log the error to an error reporting service
@@ -81,12 +83,6 @@ class AddExperience extends Component {
 
     this.setState({ loading: !loading });
   };
-
-  onError = () =>
-    Modal.error({
-      title: 'Oops, it seems an error occurred!',
-      content: 'We are working on solving the issue.'
-    });
 
   handleOnChange = ({ target: { name, value } }) =>
     this.setState({
@@ -266,4 +262,4 @@ export default connect(
     setErrors,
     unsetErrors
   }
-)(AddExperience);
+)(withError(AddExperience));
