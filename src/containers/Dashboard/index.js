@@ -110,7 +110,7 @@ class Dashboard extends Component {
                             extra={
                               <ButtonGroup>
                                 <Button type="primary">
-                                  <Link to={`/profile/${profile.user._id}`}>
+                                  <Link to={`/user/${profile.user._id}`}>
                                     <Icon type="user" /> View Profile
                                   </Link>
                                 </Button>
