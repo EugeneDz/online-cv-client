@@ -6,6 +6,7 @@ export const USERS_LOGIN = '/api/users/login';
 
 // Profile
 export const CURRENT_PROFILE = '/api/profile';
+export const PROFILE_GET_ALL = '/api/profile/all';
 export const PROFILE_ADD_EDUCATION = '/api/profile/education';
 export const PROFILE_DELETE_EDUCATION = '/api/profile/education/';
 export const PROFILE_ADD_EXPERIENCE = '/api/profile/experience';
