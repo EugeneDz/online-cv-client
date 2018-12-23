@@ -191,8 +191,14 @@ class Details extends Component {
                             <>
                               <Row key={item._id}>
                                 <Col span={24}>
-                                  <h3>{item.company}</h3>
-                                  <p>{item.title}</p>
+                                  <h3>
+                                    <strong>Company: </strong>
+                                    {item.company}
+                                  </h3>
+                                  <p>
+                                    <strong>Position: </strong>
+                                    {item.title}
+                                  </p>
                                 </Col>
                                 <Col span={24}>
                                   <h6>
@@ -204,7 +210,10 @@ class Details extends Component {
                                   </h6>
                                 </Col>
                                 {!isEmpty(item.description) && (
-                                  <Col span={24}>{item.description}</Col>
+                                  <Col span={24}>
+                                    <strong>Description: </strong>
+                                    {item.description}
+                                  </Col>
                                 )}
                               </Row>
                               {profile.experience.length > 1 && <Divider />}
@@ -218,8 +227,14 @@ class Details extends Component {
                             <>
                               <Row key={item._id}>
                                 <Col span={24}>
-                                  <h3>{item.school}</h3>
-                                  <p>{item.fieldofstudy}</p>
+                                  <h3>
+                                    <strong>Institution: </strong>
+                                    {item.school}
+                                  </h3>
+                                  <p>
+                                    <strong>Field of Study: </strong>
+                                    {item.fieldofstudy}
+                                  </p>
                                 </Col>
                                 <Col span={24}>
                                   <h6>
@@ -231,7 +246,10 @@ class Details extends Component {
                                   </h6>
                                 </Col>
                                 {!isEmpty(item.description) && (
-                                  <Col span={24}>{item.description}</Col>
+                                  <Col span={24}>
+                                    <strong>Description: </strong>
+                                    {item.description}
+                                  </Col>
                                 )}
                               </Row>
                               {profile.experience.length > 1 && <Divider />}
