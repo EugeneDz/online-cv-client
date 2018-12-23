@@ -99,7 +99,7 @@ class EditProfile extends Component {
       await new Promise(resolve => setTimeout(resolve, 400));
 
       if (status === 404 && data.noprofile) {
-        this.toggleLoading();
+        this.setState({ profileLoading: false });
       } else {
         this.setState({ profileLoading: false });
         _setCurrentProfile(data);

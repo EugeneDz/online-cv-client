@@ -209,52 +209,54 @@ class Profile extends Component {
                   <Skeleton avatar active paragraph={{ rows: 4 }} />
                 </div>
               ) : (
-                <div>
-                  <Row>
-                    <Col>
-                      <Card
-                        title={<Avatar src={auth.user.avatar} />}
-                        extra={
-                          <ButtonGroup>
-                            <Button type="primary">
-                              <Link to="/profile/edit">
-                                <Icon type="edit" /> Edit Profile
-                              </Link>
-                            </Button>
-                            <Button type="primary">
-                              <Link to="/profile/add-experience">
-                                <Icon type="plus-circle" /> Add Experience
-                              </Link>
-                            </Button>
-                            <Button type="primary">
-                              <Link to="/profile/add-education">
-                                <Icon type="plus-circle" /> Add Education
-                              </Link>
-                            </Button>
-                          </ButtonGroup>
-                        }
-                        style={{ width: '100%' }}
-                      >
-                        <Table
-                          title={() => 'Experience'}
-                          dataSource={this.getExperienceList(profile.experience || [])}
-                          columns={experienceColumns}
-                        />
-                        <Table
-                          title={() => 'Education'}
-                          dataSource={this.getEducationList(profile.education || [])}
-                          columns={educationColumns}
-                        />
-                      </Card>
-                    </Col>
-                  </Row>
-                </div>
+                !noprofile && (
+                  <div>
+                    <Row>
+                      <Col>
+                        <Card
+                          title={<Avatar src={auth.user.avatar} />}
+                          extra={
+                            <ButtonGroup>
+                              <Button type="primary">
+                                <Link to="/profile/edit">
+                                  <Icon type="edit" /> Edit Profile
+                                </Link>
+                              </Button>
+                              <Button type="primary">
+                                <Link to="/profile/add-experience">
+                                  <Icon type="plus-circle" /> Add Experience
+                                </Link>
+                              </Button>
+                              <Button type="primary">
+                                <Link to="/profile/add-education">
+                                  <Icon type="plus-circle" /> Add Education
+                                </Link>
+                              </Button>
+                            </ButtonGroup>
+                          }
+                          style={{ width: '100%' }}
+                        >
+                          <Table
+                            title={() => 'Experience'}
+                            dataSource={this.getExperienceList(profile.experience || [])}
+                            columns={experienceColumns}
+                          />
+                          <Table
+                            title={() => 'Education'}
+                            dataSource={this.getEducationList(profile.education || [])}
+                            columns={educationColumns}
+                          />
+                        </Card>
+                      </Col>
+                    </Row>
+                  </div>
+                )
               )}
               {noprofile && (
                 <div>
                   <Alert message={noprofile} type="info" showIcon />
                   <Divider orientation="right">
-                    <Link to="/profile/create">
+                    <Link to="/profile/edit">
                       <Button type="primary" block>
                         Create Profile
                       </Button>

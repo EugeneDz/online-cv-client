@@ -128,6 +128,14 @@ class Details extends Component {
                         </Row>
                         <Row type="flex" justify="center">
                           <Col>
+                            {!isEmpty(profile.website) && (
+                              <a target="_blunk" href={profile.website}>
+                                <Icon
+                                  style={{ fontSize: '32px', padding: '0 8px' }}
+                                  type="global"
+                                />
+                              </a>
+                            )}
                             {!isEmpty(profile.githubusername) && (
                               <a
                                 target="_blunk"
